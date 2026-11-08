@@ -1,0 +1,10 @@
+.container { max-width: 1120px; margin: 0 auto; padding: 0 16px; }
+.site-header { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+.site-footer { border-top: 1px solid #e5e7eb; padding: 32px 0; }
+.grid { display: grid; gap: 24px; }
+.grid--2 { grid-template-columns: repeat(2, 1fr); }
+.grid--3 { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 720px) {
+  .grid--2, .grid--3 { grid-template-columns: 1fr; }
+  .site-header.is-compact { height: 48px; }
+}

@@ -1,0 +1,9 @@
+<section class="hero-list">
+  <h2 class="hero-list__title">Heroes</h2>
+  <ul class="hero-list__items">
+    <li *ngFor="let hero of heroes" class="hero-item" [ngClass]="{ 'hero-item--selected': hero === selected, '': hero.retired }" (click)="select(hero)">
+      <span class="hero-item__badge">{{ hero.id }}</span>
+      <span class="hero-item__name" [class.hero-item__name--long]="hero.name.length > 12">{{ hero.name }}</span>
+    </li>
+  </ul>
+</section>

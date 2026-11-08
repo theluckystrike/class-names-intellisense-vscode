@@ -1,0 +1,15 @@
+.hero-list {
+  padding: 1rem;
+  &__title { font-size: 1.2rem; }
+  &__items { list-style: none; padding: 0; }
+}
+.hero-item {
+  display: flex;
+  gap: .5rem;
+  cursor: pointer;
+  &--selected { background: #cfd8dc; }
+  &--retired { color: #90a4ae; }
+  &__badge { min-width: 2rem; text-align: right; }
+  &__name { flex: 1; &--long { font-size: .9em; } }
+  &:hover { background: #eceff1; }
+}

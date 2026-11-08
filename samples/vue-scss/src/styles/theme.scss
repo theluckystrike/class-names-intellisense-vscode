@@ -1,0 +1,25 @@
+// Theme tokens and shared blocks
+$brand: #42b883;
+$radius: 10px;
+
+.surface {
+  background: #fff;
+  border-radius: $radius;
+  &--raised { box-shadow: 0 2px 10px rgba(0, 0, 0, .08); }
+  &--sunken { background: #f3f4f6; }
+}
+
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  &.is-success { background: rgba($brand, .15); color: darken($brand, 15%); }
+  &.is-danger { background: #fee2e2; color: #b91c1c; }
+}
+
+@each $size in sm, md, lg {
+  .gap-#{$size} { gap: 4px; }
+}
+
+@mixin focus-ring { outline: 2px solid $brand; outline-offset: 2px; }
+.focusable:focus-visible { @include focus-ring; }

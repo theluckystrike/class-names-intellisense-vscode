@@ -1,0 +1,8 @@
+.button { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 6px; font-weight: 500; }
+.primary { background: #2563eb; color: white; }
+.primary:hover { background: #1d4ed8; }
+.ghost { background: transparent; color: #2563eb; }
+.icon-only { padding: 8px; }
+.isLoading { opacity: .6; pointer-events: none; }
+.spinner { width: 14px; height: 14px; animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }

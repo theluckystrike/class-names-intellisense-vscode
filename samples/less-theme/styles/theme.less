@@ -1,0 +1,21 @@
+@primary: #7c3aed;
+@radius: 6px;
+
+.rounded() { border-radius: @radius; }
+
+.panel {
+  .rounded();
+  border: 1px solid fade(@primary, 30%);
+  &-header { padding: 10px 14px; font-weight: 600; }
+  &-body { padding: 14px; }
+  &.is-collapsed &-body { display: none; }
+}
+
+.alert {
+  padding: 12px;
+  &-info { background: lighten(@primary, 40%); }
+  &-warning { background: #fef3c7; }
+}
+
+#sidebar { width: 240px; }
+@media (max-width: 800px) { #sidebar { width: 100%; } }

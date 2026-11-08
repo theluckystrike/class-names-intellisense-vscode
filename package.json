@@ -1,0 +1,342 @@
+{
+  "name": "zovo-html-css-class-intellisense",
+  "displayName": "HTML CSS Support & CSS Class IntelliSense (Class Names, ID Completion)",
+  "description": "Free and offline. CSS class names and id completion in HTML, React, Vue, Svelte, Angular, PHP and Blade, from every CSS, SCSS and Less file in your project, <style> blocks, linked style sheets and CSS modules. Go to definition and hover. Light on CPU in big monorepos.",
+  "version": "0.1.0",
+  "publisher": "zovo",
+  "license": "MIT",
+  "icon": "icon.png",
+  "galleryBanner": {
+    "color": "#1B2433",
+    "theme": "dark"
+  },
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Other"
+  ],
+  "keywords": [
+    "html css support",
+    "css class intellisense",
+    "css class names",
+    "intellisense for css class names",
+    "css class completion",
+    "class name completion",
+    "id completion",
+    "css intellisense",
+    "html css",
+    "scss",
+    "less",
+    "css modules",
+    "tailwind",
+    "bootstrap",
+    "bulma",
+    "vue",
+    "react",
+    "svelte",
+    "angular",
+    "blade",
+    "offline"
+  ],
+  "main": "./dist/extension.js",
+  "activationEvents": [
+    "onLanguage:html",
+    "onLanguage:php",
+    "onLanguage:blade",
+    "onLanguage:twig",
+    "onLanguage:erb",
+    "onLanguage:handlebars",
+    "onLanguage:vue",
+    "onLanguage:vue-html",
+    "onLanguage:svelte",
+    "onLanguage:astro",
+    "onLanguage:javascriptreact",
+    "onLanguage:typescriptreact",
+    "onLanguage:javascript",
+    "onLanguage:typescript",
+    "onLanguage:razor",
+    "onLanguage:aspnetcorerazor",
+    "onLanguage:django-html",
+    "onLanguage:jinja-html",
+    "onLanguage:jinja",
+    "onLanguage:nunjucks",
+    "onLanguage:liquid",
+    "onLanguage:edge",
+    "onLanguage:html-eex",
+    "onLanguage:phoenix-heex",
+    "onLanguage:heex",
+    "onLanguage:templ",
+    "onLanguage:mdx",
+    "onLanguage:markdown",
+    "onLanguage:css",
+    "onLanguage:scss",
+    "onLanguage:less"
+  ],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": true
+    },
+    "virtualWorkspaces": true
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "htmlCssClass.reindex",
+        "title": "Re-index style sheets",
+        "category": "CSS Class IntelliSense"
+      },
+      {
+        "command": "htmlCssClass.showReport",
+        "title": "Show index report",
+        "category": "CSS Class IntelliSense"
+      },
+      {
+        "command": "htmlCssClass.openWalkthrough",
+        "title": "Get Started",
+        "category": "CSS Class IntelliSense"
+      },
+      {
+        "command": "htmlCssClass.supportDeveloper",
+        "title": "Support the developer",
+        "category": "CSS Class IntelliSense"
+      },
+      {
+        "command": "htmlCssClass.moreViewers",
+        "title": "More free extensions",
+        "category": "CSS Class IntelliSense"
+      }
+    ],
+    "menus": {
+      "commandPalette": []
+    },
+    "configuration": {
+      "title": "HTML CSS Class IntelliSense",
+      "properties": {
+        "htmlCssClass.languages": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "html",
+            "php",
+            "blade",
+            "twig",
+            "erb",
+            "handlebars",
+            "vue",
+            "vue-html",
+            "svelte",
+            "astro",
+            "javascriptreact",
+            "typescriptreact",
+            "javascript",
+            "typescript",
+            "razor",
+            "aspnetcorerazor",
+            "django-html",
+            "jinja-html",
+            "jinja",
+            "nunjucks",
+            "liquid",
+            "edge",
+            "html-eex",
+            "phoenix-heex",
+            "heex",
+            "templ",
+            "mdx",
+            "markdown"
+          ],
+          "description": "Language ids where class and id names complete. A change applies after a window reload."
+        },
+        "htmlCssClass.exclude": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "**/node_modules/**",
+            "**/.git/**",
+            "**/bower_components/**",
+            "**/.next/**",
+            "**/.nuxt/**",
+            "**/.svelte-kit/**",
+            "**/coverage/**"
+          ],
+          "description": "Glob patterns of style sheets that are not indexed, on top of files.exclude and .gitignore. Sheets that a page links with <link rel=\"stylesheet\"> are still read."
+        },
+        "htmlCssClass.includePackages": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "markdownDescription": "Packages in `node_modules` whose style sheets are indexed anyway, for example `bootstrap` or `@company/ui`."
+        },
+        "htmlCssClass.useGitignore": {
+          "type": "boolean",
+          "default": true,
+          "description": "Skip style sheets that the .gitignore file at the root of each workspace folder ignores."
+        },
+        "htmlCssClass.maxFiles": {
+          "type": "number",
+          "default": 5000,
+          "minimum": 1,
+          "maximum": 100000,
+          "description": "The most style sheets to index. The index report says when it stops early."
+        },
+        "htmlCssClass.maxFileSizeKB": {
+          "type": "number",
+          "default": 2048,
+          "minimum": 16,
+          "maximum": 65536,
+          "description": "Style sheets larger than this are skipped without being read, and the index report lists them."
+        },
+        "htmlCssClass.maxNamesPerFile": {
+          "type": "number",
+          "default": 50000,
+          "minimum": 100,
+          "maximum": 1000000,
+          "description": "The most class and id names read from one style sheet."
+        },
+        "htmlCssClass.frameworks": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "bootstrap5",
+              "bulma"
+            ],
+            "enumDescriptions": [
+              "Bootstrap 5.3 class names (MIT).",
+              "Bulma 1.0 class names (MIT)."
+            ]
+          },
+          "default": [],
+          "uniqueItems": true,
+          "description": "Bundled class lists to add to completions, for pages that load Bootstrap or Bulma from a CDN. The lists ship with the extension; nothing is downloaded."
+        },
+        "htmlCssClass.classFunctions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "clsx",
+            "cn",
+            "cx",
+            "classnames",
+            "classNames",
+            "twMerge",
+            "twJoin",
+            "cva",
+            "tv",
+            "classList",
+            "ctl"
+          ],
+          "description": "Functions whose string arguments hold class names, for example clsx(\"btn\", on && \"active\")."
+        },
+        "htmlCssClass.suggestIds": {
+          "type": "boolean",
+          "default": true,
+          "description": "Complete id names from the style sheets in id=\"...\" attributes."
+        },
+        "htmlCssClass.hover": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show the CSS rule and its file when the mouse is over a class name."
+        },
+        "htmlCssClass.validate": {
+          "type": "boolean",
+          "default": false,
+          "description": "Mark class names that no indexed style sheet defines, with a faint hint. Off by default: utility classes from other tools would show up too."
+        },
+        "htmlCssClass.showStatusBar": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show the number of indexed classes in the status bar while a template file is open."
+        },
+        "htmlCssClass.askForRating": {
+          "type": "boolean",
+          "default": true,
+          "description": "Ask for a Marketplace rating after you used completions in 2 files, in 2 sessions at least 4 hours apart. \"Later\" asks one more time after 7 days, \"No thanks\" never asks again. It never asks after an error or more than 2 times. Nothing is sent anywhere."
+        },
+        "htmlCssClass.showSupportLinks": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show the small Rate, Sponsor and More free extensions links in the status bar tooltip. Nothing is sent anywhere."
+        }
+      }
+    },
+    "walkthroughs": [
+      {
+        "id": "htmlCssClass.start",
+        "title": "Get started with CSS Class IntelliSense",
+        "description": "Class and id names from your own style sheets, in every template language.",
+        "steps": [
+          {
+            "id": "complete",
+            "title": "Type a class name",
+            "description": "Open an HTML, JSX, Vue, Svelte, PHP or Blade file and type inside class=\"...\" or className=\"...\". Names from every CSS, SCSS and Less file in the workspace show up, with the file they come from.\n[Find a template file](command:workbench.action.quickOpen?%5B%22.html%22%5D)",
+            "media": {
+              "image": "images/completion.png",
+              "altText": "Class name completion in an HTML file, listing classes from the project style sheets."
+            },
+            "completionEvents": [
+              "onCommand:workbench.action.quickOpen"
+            ]
+          },
+          {
+            "id": "navigate",
+            "title": "Hover and go to definition",
+            "description": "Hover a class name to see its CSS rule. F12 (Go to Definition) opens the rule in its style sheet.",
+            "media": {
+              "markdown": "walkthrough/navigate.md"
+            }
+          },
+          {
+            "id": "modules",
+            "title": "CSS modules, clsx and frameworks",
+            "description": "styles. completes from the imported module file. clsx(), cn() and cva() strings complete too. Pages that load Bootstrap or Bulma from a CDN can use the bundled class lists.",
+            "media": {
+              "markdown": "walkthrough/modules.md"
+            }
+          },
+          {
+            "id": "settings",
+            "title": "Limits and excludes",
+            "description": "node_modules, files.exclude and .gitignore are skipped. Set the file and size limits, or add packages to index.\n[Open settings](command:workbench.action.openSettings?%5B%22htmlCssClass%22%5D)",
+            "media": {
+              "markdown": "walkthrough/settings.md"
+            },
+            "completionEvents": [
+              "onCommand:workbench.action.openSettings"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "scripts": {
+    "build": "node scripts/build.js --production",
+    "test": "node scripts/build.js --production && node --test \"test/*.test.js\"",
+    "package": "npm run build && npx -y @vscode/vsce package --no-dependencies -o dist/"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2",
+    "@types/vscode": "~1.90.0"
+  },
+  "homepage": "https://github.com/theluckystrike/html-css-class-intellisense-vscode#readme",
+  "bugs": {
+    "url": "https://github.com/theluckystrike/html-css-class-intellisense-vscode/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/theluckystrike/html-css-class-intellisense-vscode"
+  },
+  "sponsor": {
+    "url": "https://github.com/sponsors/theluckystrike"
+  }
+}
