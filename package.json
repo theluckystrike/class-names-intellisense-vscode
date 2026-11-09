@@ -328,13 +328,13 @@
     "esbuild": "0.28.2",
     "@types/vscode": "~1.90.0"
   },
-  "homepage": "https://github.com/theluckystrike/html-css-class-intellisense-vscode#readme",
+  "homepage": "https://github.com/theluckystrike/class-names-intellisense-vscode#readme",
   "bugs": {
-    "url": "https://github.com/theluckystrike/html-css-class-intellisense-vscode/issues"
+    "url": "https://github.com/theluckystrike/class-names-intellisense-vscode/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/theluckystrike/html-css-class-intellisense-vscode"
+    "url": "https://github.com/theluckystrike/class-names-intellisense-vscode"
   },
   "sponsor": {
     "url": "https://github.com/sponsors/theluckystrike"
