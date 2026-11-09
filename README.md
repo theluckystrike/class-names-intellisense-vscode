@@ -1,4 +1,4 @@
-# HTML CSS Support & CSS Class IntelliSense
+# Class Names IntelliSense & CSS Support for HTML Templates
 
 **Class names and id completion from your own CSS, SCSS and Less files, in every template language. Free, no sign-in, works offline.**
 
@@ -13,15 +13,15 @@ Type inside `class="..."` and the class names from every style sheet in your wor
 - Never changes your text: it only offers completions. Nothing is inserted or rewritten while you type.
 - Nothing leaves your computer: it never downloads a remote style sheet. Bootstrap 5 and Bulma class lists ship with it, for pages that load them from a CDN.
 
-## Why another one
+## Why this one
 
-The two big class completion extensions get the same complaints in their reviews:
+The two most installed class completion extensions get the same complaints in their public reviews ([first](https://marketplace.visualstudio.com/items?itemName=ecmel.vscode-html-css&ssr=false#review-details), [second](https://marketplace.visualstudio.com/items?itemName=Zignd.html-css-class-completion&ssr=false#review-details)). This is a different extension, built around them:
 
 | Complaint in reviews | What this extension does |
 | --- | --- |
-| "It does not suggest class or id names in a linked style sheet", "doesn't work in my Vue 3 project" | Reads the whole workspace, `<link>` sheets and `<style>` blocks. Vue `:class` objects, JSX, Svelte, Blade and CSS modules work without settings. |
-| "Using lots of CPU on a large monorepo crashes VS Code", "It costs all resources" | Skips node_modules and ignored folders, stops at 5,000 sheets and 2 MB per sheet (both settings), indexes in the background, then only re-reads changed files. In our test workspace the extension host was at 0% CPU right after indexing. |
-| "Breaking my code in blade files, duplicate word and letters while typing" | Completion only. A picked name replaces the word under the cursor and nothing else. |
+| "It does not suggest class or id names in a linked style sheet", "Tried it in a Vue3 project, but it did not work at all" ([reviews](https://marketplace.visualstudio.com/items?itemName=ecmel.vscode-html-css&ssr=false#review-details)) | Reads the whole workspace, `<link>` sheets and `<style>` blocks. Vue `:class` objects, JSX, Svelte, Blade and CSS modules work without settings. |
+| "Using lots of CPU on a large monorepo crashes VS Code", "It costs all resources" ([reviews](https://marketplace.visualstudio.com/items?itemName=Zignd.html-css-class-completion&ssr=false#review-details)) | Skips node_modules and ignored folders, stops at 5,000 sheets and 2 MB per sheet (both settings), indexes in the background, then only re-reads changed files. In our test workspace the extension host was at 0% CPU right after indexing. |
+| "Breaking my code in blade files, duplicate word and letters while typing" ([reviews](https://marketplace.visualstudio.com/items?itemName=Zignd.html-css-class-completion&ssr=false#review-details)) | Completion only. A picked name replaces the word under the cursor and nothing else. |
 
 ## How it looks
 
@@ -59,7 +59,7 @@ Vue and Svelte files need their usual language extension (Vue - Official, Svelte
 - Completion reads only the few thousand characters before the cursor, so it is as fast in a huge file as in a small one. With tens of thousands of classes it sends the best 5,000 matches and asks again as you type.
 - Measured in real VS Code 1.142 on a MacBook: 16 style sheets (real Bootstrap 5.3, Bulma 1.0 and animate.css among them, 7,408 classes) indexed in 262 ms. With the size limit raised, a full re-index that included a 4.3 MB sheet with 100,000 selectors took 280 ms (32,505 classes in all). The extension host used 73 MB and 0% CPU when idle.
 
-Run the command "CSS Class IntelliSense: Show index report" to see what was indexed and what was skipped. The status bar shows the number of classes; its tooltip has the same links.
+Run the command "Class Names IntelliSense: Show index report" to see what was indexed and what was skipped. The status bar shows the number of classes; its tooltip has the same links.
 
 ## Settings
 

@@ -230,7 +230,7 @@ const QUEUED = [
   ],
   [
     "zovo.zovo-html-css-class-intellisense",
-    "HTML CSS Support & CSS Class IntelliSense (Class Names, ID Completion)",
+    "Class Names IntelliSense & CSS Support for HTML Templates (ID Completion)",
     "free and offline. CSS class names and id completion in HTML, React, Vue, Svelte, Angular, PHP and Blade, from every CSS, SCSS and Less file in your project, <style> blocks, linked style sheets and CSS modules. Go to definition and hover. Light on CPU in big monorepos.",
     "https://github.com/theluckystrike/html-css-class-intellisense-vscode"
   ],

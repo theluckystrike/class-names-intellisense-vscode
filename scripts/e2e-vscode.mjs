@@ -1,4 +1,4 @@
-// Real VS Code gate for HTML CSS Support & CSS Class IntelliSense.
+// Real VS Code gate for Class Names IntelliSense & CSS Support for HTML Templates.
 // node scripts/e2e-vscode.mjs <vsix> <workDir> <wsFolder> <monorepoFolder> [port]
 // Installs the vsix into an isolated profile, opens real template files, types in class attributes, reads the
 // suggest widget rows from the workbench DOM, checks hover, definition, notifications, status bar, support picker,
@@ -42,11 +42,19 @@ async function openAt(vs, file, marker, delta = 0) {
   const base = path.basename(file);
   await vs.waitFor(async () => (await activeTitle(vs)).includes(base), 15000);
   await sleep(600);
-  await vs.command('Go to Line/Column');
-  await vs.type(`${line}:${col}`);
-  await sleep(300);
-  await vs.key('Enter', 'Enter');
-  await sleep(400);
+  // FIN1: wait for the Go to Line box before typing, then check the cursor in the status bar; one retry (busy machine)
+  const want = `Ln ${line}, Col ${col}`;
+  const cur = () => vs.wbEval(`(() => { const e = [...document.querySelectorAll('.statusbar-item')].find(x => /^Ln \\d+, Col \\d+/.test(x.textContent.trim())); return e ? e.textContent.trim() : ''; })()`);
+  for (let k = 0; k < 2; k++) {
+    await vs.command('Go to Line/Column');
+    await vs.waitFor(() => vs.wbEval(`(() => { const w = document.querySelector('.quick-input-widget'); return !!(w && w.style.display !== 'none' && w.offsetParent !== null); })()`), 4000, 100);
+    await vs.type(`${line}:${col}`);
+    await sleep(300);
+    await vs.key('Enter', 'Enter');
+    await sleep(400);
+    if (await vs.waitFor(async () => ((await cur()).startsWith(want) ? true : null), 2500, 150)) return;
+    await vs.key('Escape', 'Escape');
+  }
 }
 
 async function suggestRows(vs, wantAny, ms = 8000) {
@@ -71,6 +79,7 @@ async function check(vs, name, file, marker, typed, expect, opts = {}) {
     const t0 = Date.now();
     await trigger(vs);
     let rows = await suggestRows(vs, expect, opts.ms || 8000);
+    if (!rows) { await vs.key('Escape', 'Escape'); await sleep(300); await trigger(vs); rows = await suggestRows(vs, expect, 4000); } // FIN1: the suggest list does not refresh by itself when the first request came before the index; ask once more, as a user would
     const ms = Date.now() - t0;
     if (!rows) rows = await suggestRows(vs, null, 500) || [];
     const names = rows.map((r) => r.name);
@@ -80,6 +89,7 @@ async function check(vs, name, file, marker, typed, expect, opts = {}) {
       await vs.shot(path.join(SHOTS, opts.shot));
     }
     ok(name, pass, `${ms} ms; rows: ${names.slice(0, 8).join(', ')}${rows[0] ? ' [' + rows[0].desc.trim() + ']' : ''}`);
+    if (!pass) { try { await vs.shot(path.join(SHOTS, 'FAIL-' + name.replace(/\W+/g, '_').slice(0, 40) + '.png')); } catch {} } // FIN1
     await vs.key('Escape', 'Escape');
     if (typed) await vs.command('File: Revert File'); // drop the typing
     return { pass, ms, names };
@@ -114,7 +124,7 @@ async function cpuIdle(pid, seconds = 10) {
 
 function readLog(vs, re) {
   for (const f of vs.extHostLogs()) {
-    if (!/HTML CSS Class IntelliSense|htmlCssClass|output/i.test(f)) continue;
+    if (!/Class Names IntelliSense|htmlCssClass|output/i.test(f)) continue;
     try { const t = fs.readFileSync(f, 'utf8'); const m = t.match(re); if (m) return { file: f, text: t, m }; } catch {}
   }
   return null;
@@ -202,8 +212,11 @@ async function phaseA() {
     await check(vs, 'Real animate.css (linked)', P('real/page.html'), 'class="animate__', 'fadeInU', ['animate__fadeInUp']);
     // Hostile
     {
-      const n = await notifText(vs);
-      ok('hostile: one message about skipped over-size sheets', /skipped 2 style sheets over the size limit/.test(n), n);
+      let n = await notifText(vs);
+      if (!/skipped 2 style sheets over the size limit/.test(n)) { // FIN1: the toast may have moved to the notification center by now
+        try { await vs.command('Notifications: Show Notifications'); await sleep(800); n += ' || ' + await vs.wbEval(`(document.querySelector('.notifications-center') || {}).textContent || ''`); await vs.command('Notifications: Hide Notifications'); } catch {}
+      }
+      ok('hostile: one message about skipped over-size sheets', /skipped 2 style sheets over the size limit/i.test(n), n);
       const r = await check(vs, 'hostile: broken SCSS read up to the error', P('hostile/hostile.html'), 'class="ok-', '', ['ok-before']);
       ok('hostile: completion fast with a 50 MB linked sheet (skipped)', r.ms !== undefined && r.ms < 3000, r.ms + ' ms');
       await check(vs, 'hostile: symlink loop folder indexed once, no hang', P('hostile/hostile.html'), 'class="', 'loop-', ['loop-ok']);
@@ -214,7 +227,7 @@ async function phaseA() {
     }
     // Support picker
     {
-      await vs.command('CSS Class IntelliSense: More free extensions');
+      await vs.command('Class Names IntelliSense: More free extensions');
       const qp = await vs.waitFor(() => vs.wbEval(`(() => { const w = document.querySelector('.quick-input-widget'); return w && w.offsetParent ? w.textContent : null; })()`), 5000);
       ok('support: More free extensions picker, related first', qp && /Related to this extension/.test(qp) && /SVG Viewer/.test(qp), (qp || '').slice(0, 160));
       await vs.key('Escape', 'Escape');
@@ -231,6 +244,7 @@ async function phaseA() {
       const sp = path.join(dir, 'ud', 'User', 'settings.json');
       const s = JSON.parse(fs.readFileSync(sp, 'utf8'));
       s['htmlCssClass.maxFileSizeKB'] = 8192;
+      s['htmlCssClass.maxNamesPerFile'] = 200000; // FIN1: 100,000 selectors = 200,000 names; the default cap (50,000) stops at gen-sel-24999 by design
       fs.writeFileSync(sp, JSON.stringify(s, null, 1));
       const idx2 = await vs.waitFor(() => { const r = readLog(vs, /Indexed [^\n]*\(settings changed\)[^\n]*/); return r; }, 30000, 500);
       ok('100,000 selectors: indexed after raising the limit', !!idx2, idx2 ? idx2.m[0] : '');

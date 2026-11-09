@@ -1,5 +1,5 @@
 'use strict';
-// HTML CSS Support & CSS Class IntelliSense: class and id completion, go to definition and hover from the
+// Class Names IntelliSense & CSS Support for HTML Templates: class and id completion, go to definition and hover from the
 // workspace style sheets, <style> blocks, linked sheets and CSS modules. Completion only: it never edits text
 // while you type. Local files only: no network request of any kind.
 const vscode = require('vscode');
@@ -12,7 +12,7 @@ const { registerSupport, footerMarkdown, showLinks } = require('./support');
 
 const EXT_ID = 'zovo.zovo-html-css-class-intellisense';
 const SECTION = 'htmlCssClass';
-const NAME = 'HTML CSS Class IntelliSense';
+const NAME = 'Class Names IntelliSense';
 const STYLE_GLOB = '**/*.{css,scss,less,pcss,postcss}';
 const FRAMEWORKS = { bootstrap5: { file: 'bootstrap5.json', label: 'Bootstrap 5' }, bulma: { file: 'bulma.json', label: 'Bulma' } };
 const STYLE_LANGS = new Set(['css', 'scss', 'less', 'postcss']);

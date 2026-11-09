@@ -1,6 +1,6 @@
 {
   "name": "zovo-html-css-class-intellisense",
-  "displayName": "HTML CSS Support & CSS Class IntelliSense (Class Names, ID Completion)",
+  "displayName": "Class Names IntelliSense & CSS Support for HTML Templates (ID Completion)",
   "description": "Free and offline. CSS class names and id completion in HTML, React, Vue, Svelte, Angular, PHP and Blade, from every CSS, SCSS and Less file in your project, <style> blocks, linked style sheets and CSS modules. Go to definition and hover. Light on CPU in big monorepos.",
   "version": "0.1.0",
   "publisher": "zovo",
@@ -85,34 +85,34 @@
       {
         "command": "htmlCssClass.reindex",
         "title": "Re-index style sheets",
-        "category": "CSS Class IntelliSense"
+        "category": "Class Names IntelliSense"
       },
       {
         "command": "htmlCssClass.showReport",
         "title": "Show index report",
-        "category": "CSS Class IntelliSense"
+        "category": "Class Names IntelliSense"
       },
       {
         "command": "htmlCssClass.openWalkthrough",
         "title": "Get Started",
-        "category": "CSS Class IntelliSense"
+        "category": "Class Names IntelliSense"
       },
       {
         "command": "htmlCssClass.supportDeveloper",
         "title": "Support the developer",
-        "category": "CSS Class IntelliSense"
+        "category": "Class Names IntelliSense"
       },
       {
         "command": "htmlCssClass.moreViewers",
         "title": "More free extensions",
-        "category": "CSS Class IntelliSense"
+        "category": "Class Names IntelliSense"
       }
     ],
     "menus": {
       "commandPalette": []
     },
     "configuration": {
-      "title": "HTML CSS Class IntelliSense",
+      "title": "Class Names IntelliSense (Zovo)",
       "properties": {
         "htmlCssClass.languages": {
           "type": "array",
@@ -273,7 +273,7 @@
     "walkthroughs": [
       {
         "id": "htmlCssClass.start",
-        "title": "Get started with CSS Class IntelliSense",
+        "title": "Get started with Class Names IntelliSense",
         "description": "Class and id names from your own style sheets, in every template language.",
         "steps": [
           {

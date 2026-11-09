@@ -6,4 +6,4 @@ The index skips `node_modules`, `files.exclude` and the root `.gitignore`. It st
 - `htmlCssClass.includePackages`: packages in node_modules to index anyway, for example `bootstrap`.
 - `htmlCssClass.maxFiles` and `htmlCssClass.maxFileSizeKB`: the limits.
 
-Run the command "CSS Class IntelliSense: Show index report" to see what was read and what was skipped.
+Run the command "Class Names IntelliSense: Show index report" to see what was read and what was skipped.
