@@ -189,16 +189,24 @@ async function phaseA() {
     }
     // Bootstrap from a CDN: the offer, then the bundled list
     {
-      vs.open(P('bootstrap-cdn/index.html'));
-      const offer = await vs.waitFor(async () => { const n = await notifText(vs); return /loads Bootstrap 5 from a CDN/.test(n) ? n : null; }, 10000);
+      // FIN1: the page is read (and the offer made) on the first completion or hover in it, as when a user types in class="
+      await openAt(vs, P('bootstrap-cdn/index.html'), '<span class="'); await trigger(vs); await sleep(600); await vs.key('Escape', 'Escape');
+      let offer = await vs.waitFor(async () => { const n = await notifText(vs); return /loads Bootstrap 5 from a CDN/.test(n) ? n : null; }, 10000);
+      let fromCenter = false;
+      if (!offer) { // FIN1: another extension's toast (Svelte, Vue) can push it into the notification center
+        try { await vs.command('Notifications: Show Notifications'); await sleep(800); const c = await vs.wbEval(`(document.querySelector('.notifications-center') || {}).textContent || ''`); if (/loads Bootstrap 5 from a CDN/.test(c)) { offer = 'notification center: ' + c.slice(0, 200); fromCenter = true; } } catch {}
+      }
       ok('CDN page: offer to add the bundled Bootstrap 5 list', !!offer, offer);
-      if (offer) await clickToastButton(vs, 'Add classes');
+      if (offer) { if (!(await clickToastButton(vs, 'Add classes'))) { const b = JSON.parse(await vs.wbEval(`(() => { const b = [...document.querySelectorAll('.notifications-center .monaco-button')].find(x => x.textContent.trim() === 'Add classes'); if (!b) return 'null'; const r = b.getBoundingClientRect(); return JSON.stringify({ x: r.x + r.width / 2, y: r.y + r.height / 2 }); })()`)); if (b) await vs.click(b.x, b.y); } }
+      if (fromCenter) { try { await vs.command('Notifications: Hide Notifications'); } catch {} }
       await sleep(1500);
       await check(vs, 'Bootstrap 5 (CDN) bundled class list', P('bootstrap-cdn/index.html'), '<span class="', 'navbar-ex', ['navbar-expand-lg']);
     }
     await check(vs, 'React TSX: CSS module after styles.', P('react-modules/src/Button.tsx'), 'const x = styles.', '', ['button', 'icon-only', 'isLoading'], { shot: 'css-modules-dark.png', details: true });
     await check(vs, 'React TSX: className string (global app.css)', P('react-modules/src/Button.tsx'), 'className="toolbar ', 'toolbar-s', ['toolbar-spacer']);
     await check(vs, 'React JSX: cn() string', P('react-modules/src/App.jsx'), "dense && '", 'toolbar-s', ['toolbar-spacer']);
+    // FIN1: the Vue extension opens its "Welcome to Vue" page the first time a .vue file opens; let it, then close it
+    try { await openAt(vs, P('vue-scss/src/components/TodoCard.vue'), '<template>'); await sleep(4000); await vs.command('View: Close All Editors'); await sleep(500); } catch {}
     await check(vs, 'Vue SFC: :class object string, SCSS nesting', P('vue-scss/src/components/TodoCard.vue'), "'todo-card__", '', ['todo-card__title', 'todo-card__meta']);
     await check(vs, 'Vue SFC: $style module', P('vue-scss/src/components/TodoCard.vue'), '$style.', '', ['note', 'noteWarning']);
     await check(vs, 'Vue SFC: theme.scss (&--raised)', P('vue-scss/src/components/TodoCard.vue'), 'class="todo-card ', 'surface--', ['surface--raised', 'surface--sunken']);
