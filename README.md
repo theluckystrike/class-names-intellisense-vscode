@@ -13,6 +13,13 @@ Type inside `class="..."` and the class names from every style sheet in your wor
 - Never changes your text: it only offers completions. Nothing is inserted or rewritten while you type.
 - Nothing leaves your computer: it never downloads a remote style sheet. Bootstrap 5 and Bulma class lists ship with it, for pages that load them from a CDN.
 
+## Teams and companies
+
+- Zovo Pro Team is the company licence: USD 59 once for a team of 5, one key, the Pro tools in every Zovo extension that has them. [See Zovo Pro Team](https://license.zovo.one/buy/zovo-pro-team?client_reference_id=readme-htmlcss)
+- Commercial use is allowed.
+- The key is checked on your computer, so it works offline. No account and no subscription.
+- Invoice with your company name and tax ID on request: support@zovo.one.
+
 ## Why this one
 
 The two most installed class completion extensions get the same complaints in their public reviews ([first](https://marketplace.visualstudio.com/items?itemName=ecmel.vscode-html-css&ssr=false#review-details), [second](https://marketplace.visualstudio.com/items?itemName=Zignd.html-css-class-completion&ssr=false#review-details)). This is a different extension, built around them:
